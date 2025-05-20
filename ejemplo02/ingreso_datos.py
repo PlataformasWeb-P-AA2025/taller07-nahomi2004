@@ -44,11 +44,21 @@ for index, row in clubs_csv.iterrows():
     lista_club.append(club)
     session.add(club)
 
-print(lista_club)
+# Reviso si se han guardado correctamente los club en la lista
+# print(lista_club)
 
 # Hago lo mismo para jugadores
+# Leo el csv de jugadores
 jugadores_csv = pd.read_csv("data/datos_jugadores.txt", delimiter=';', header=None)
 
+# Bueno, no es lo mismo literalmente
+# Lo primero que hago es comprobar la primera celda del txt
+# de jugadores (esta contiene el nombre del equipo), es
+# igual a algun nombre de la lista de objetos lista_club
+# Si es asi, creo el objeto jugador y le envio de una vez
+# el objeto club, para que se de la relacion.
+# Se puede hacer de una forma mas efectiva? Si, pero
+# me gusta la que acabo de hacer porque la entiendo jeje.
 for index, row in jugadores_csv.iterrows():
     if row[0] == lista_club[0].nombre:
         jugador = Jugador(
