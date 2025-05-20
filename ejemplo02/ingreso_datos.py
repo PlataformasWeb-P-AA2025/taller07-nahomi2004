@@ -32,24 +32,63 @@ clubs_csv = pd.read_csv("data/datos_clubs.txt", delimiter=';', header=None)
 
 # Guardo a los clubs
 # Recorrer cada fila del DataFrame y crear objetos Club
+# Y crear un array para luego relacionarlo con un jugador
+lista_club = [] 
+
 for index, row in clubs_csv.iterrows():
     club = Club(
         nombre=row[0],
         deporte=row[1],
         fundacion=int(row[2])  # Aseguramos que sea entero
     )
+    lista_club.append(club)
     session.add(club)
+
+print(lista_club)
 
 # Hago lo mismo para jugadores
 jugadores_csv = pd.read_csv("data/datos_jugadores.txt", delimiter=';', header=None)
 
 for index, row in jugadores_csv.iterrows():
-    jugador = Jugador(
-        nombre=row[0],
-        dorsal=row[1],
-        posicion=int(row[2])  # Aseguramos que sea entero
-    )
+    if row[0] == lista_club[0].nombre:
+        jugador = Jugador(
+            nombre=row[3],
+            dorsal=row[2], 
+            # Le cambie el dorsal de Layan Loer porque como no habia ; o dato, lo tomaba a el como dorsal xd
+            posicion=row[1],
+            club=lista_club[0]
+        )
+    
+
+    if row[0] == lista_club[1].nombre: 
+        jugador = Jugador(
+            nombre=row[3],
+            dorsal=row[2],
+            posicion=row[1],
+            club=lista_club[1]
+        )
+    
+
+    if row[0] == lista_club[2].nombre:
+        jugador = Jugador(
+            nombre=row[3],
+            dorsal=row[2],
+            posicion=row[1],
+            club=lista_club[2]
+        )
+    
+
+    if row[0] == lista_club[3].nombre:
+        jugador = Jugador(
+            nombre=row[3],
+            dorsal=row[2],
+            posicion=row[1],
+            club=lista_club[3]
+        )
+    
+
     session.add(jugador)
+    
 
 # se confirma las transacciones
 session.commit()
